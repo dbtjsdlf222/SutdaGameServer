@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import org.slf4j.LoggerFactory;
 
-import client.ui.RoomScreen;
 
 import org.slf4j.Logger;
 
