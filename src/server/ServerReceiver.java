@@ -17,7 +17,6 @@ import vo.Protocol;
 
 public class ServerReceiver extends Thread { // Server
 
-	private static final Logger logger = LoggerFactory.getLogger(ServerReceiver.class);
 
 	private Socket socket;
 
@@ -36,28 +35,18 @@ public class ServerReceiver extends Thread { // Server
 				while (true) {
 					packetStr = br.readLine();
 					if (packetStr == null) {
-						logger.error("[Receive(ERROR(" +
-								packetController.getThisPlayerVO().getNo() + ", " +
-								packetController.getThisPlayerVO().getNic() +
-								"))] NULL Entered");
 						break;
 					}
 					Packet packet = mapper.readValue(packetStr, Packet.class);
 					packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
 				} // while
 			} catch (NullPointerException e) {
-				logger.error(e.getMessage(), e);
 
 			} catch (SocketException e) {
-				logger.error("[" + e.getMessage() + 
-						"(" + packetController.getThisPlayerVO().getNo() + ", "
-						+ packetController.getThisPlayerVO().getNic() + 
-						")]");
 				packetController.exitPlayer();
 			}
 
 		} catch (IOException e) {
-			logger.error(e.getMessage(), e);
 		}
 	} // run();
 

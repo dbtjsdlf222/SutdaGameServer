@@ -12,7 +12,6 @@ import javazoom.jl.player.Player;
 
 public class MusicPlayer extends Thread {
 
-	private static final Logger logger = LoggerFactory.getLogger(MusicPlayer.class);
 	
 	private Player player;
 	private File file;
@@ -22,7 +21,6 @@ public class MusicPlayer extends Thread {
 //			File file = new File(MainScreen.class.getResource("../Music/BigSleep.mp3").getFile());
 //			this.player = new Player(new BufferedInputStream(new FileInputStream(file)));
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
 		}
 	}
 

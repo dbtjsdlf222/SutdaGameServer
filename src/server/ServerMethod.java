@@ -20,7 +20,6 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ServerMethod {
-	private static final Logger logger = LoggerFactory.getLogger(ServerMethod.class);
 	@JsonIgnore
 	protected PlayerVO thisPlayerVO = new PlayerVO();
 	@JsonIgnore

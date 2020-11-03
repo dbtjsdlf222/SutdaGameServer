@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class PlayerVO {
-	private static final Logger logger = LoggerFactory.getLogger(PlayerVO.class);
 
 	@JsonIgnore
 	public static PlayerVO myVO = new PlayerVO();
@@ -143,7 +142,6 @@ public class PlayerVO {
 			brSocket = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 			pwSocket = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"), true);
 		} catch (IOException e) {
-			logger.error(e.getMessage(), e);
 		}
 	}
 	

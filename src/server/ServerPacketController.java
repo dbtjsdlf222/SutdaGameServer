@@ -17,7 +17,6 @@ import vo.Protocol;
 
 public class ServerPacketController extends ServerMethod {
 	protected Socket socket;
-	private static final Logger logger = LoggerFactory.getLogger(ServerPacketController.class);
 
 	
 	public ServerPacketController(Socket socket) {
@@ -26,11 +25,10 @@ public class ServerPacketController extends ServerMethod {
 	} //ServerPacketController();
 	
 	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
-		
-		logger.info("[Receive(" + Protocol.getName(packet.getProtocol()) + ")] " + packet);
+			System.out.println("여이요");
 		
 		switch (packet.getProtocol()) {
-
+		
 		case Protocol.MESSAGE:
 			packet.setMotion(thisPlayerVO.getNic() + " : " + packet.getMotion());
 			if (thisPlayerVO.getRoomNo() == 0) {
@@ -127,10 +125,10 @@ public class ServerPacketController extends ServerMethod {
 			
 			break;
 			
-		case Protocol.FIND:
-			if(playerOnlineList.get(packet.getMotion()) != null) {
-				
-			}
+//		case Protocol.FIND:
+//			if(playerOnlineList.get(packet.getMotion()) != null) {
+//				
+//			}
 			
 		case Protocol.MAKE_ROOM:
 			Room makeRoom = new Room();

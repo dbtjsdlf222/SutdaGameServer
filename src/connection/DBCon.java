@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 
 public class DBCon {
 
-	private static final Logger logger = LoggerFactory.getLogger(DBCon.class);
 	
 	private Connection conn = null;
 	
@@ -44,7 +43,6 @@ public class DBCon {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(dburl, dbid, dbpw);
 		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

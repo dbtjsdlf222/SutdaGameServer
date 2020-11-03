@@ -20,7 +20,6 @@ import vo.PlayerVO;
 
 public class ServerDAO {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ServerDAO.class);
 	
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -29,7 +28,6 @@ public class ServerDAO {
 		try {
 			conn = new DBCon().getMysqlConn();
 		} catch (ClassNotFoundException e) {
-			logger.error(e.getMessage(), e);
 		}
 	} //constructer();
 	
@@ -66,7 +64,6 @@ public class ServerDAO {
 			}
 
 		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
 		}
 		
 		return null;
@@ -98,7 +95,6 @@ public class ServerDAO {
 		try {
 			local = InetAddress.getLocalHost();
 		} catch (UnknownHostException e1) {
-			logger.error(e1.getMessage(), e1);
 		}
 
 		String id = null;
@@ -133,9 +129,7 @@ public class ServerDAO {
 	      String query = "update player set money_charge = 5";
 	      try {
 	         pstmt = conn.prepareStatement(query);
-	         pstmt.executeUpdate();
 	      } catch (SQLException e) {
-	         logger.error(e.getMessage(), e);
 	      }
 	   }
 	   
@@ -148,7 +142,6 @@ public class ServerDAO {
 
 	         pstmt.executeUpdate();
 	      } catch (SQLException e) {
-	         logger.error(e.getMessage(), e);
 	      }
 	   }
 	   
@@ -163,7 +156,6 @@ public class ServerDAO {
 	         rs.next();
 	         charge=rs.getInt(1);
 	      } catch (SQLException e) {
-	         logger.error(e.getMessage(), e);
 	      }
 	      return charge;
 	   }
@@ -206,7 +198,6 @@ public class ServerDAO {
 			} else
 				return false;
 		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
 		}
 
 		return true;
@@ -227,7 +218,6 @@ public class ServerDAO {
 			} else
 				return false;
 		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
 		}
 
 		return true;
@@ -258,7 +248,6 @@ public class ServerDAO {
 				try {
 					ip = InetAddress.getLocalHost().getHostAddress();
 				} catch (UnknownHostException e) {
-					logger.error(e.getMessage(), e);
 				}
 
 				return new PlayerVO(no, rsID, rsPW, nickname, money, admin, win, lose, character);
@@ -267,7 +256,6 @@ public class ServerDAO {
 			}
 
 		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
 		}
 		return null;
 	}
@@ -287,7 +275,6 @@ public class ServerDAO {
 			} else
 				return false;
 		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
 		}
 		return true;
 	}
@@ -303,7 +290,6 @@ public class ServerDAO {
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
 		}
 	}
 }
