@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import dao.ServerDAO;
 
 public class RunServer {
-	private static final Logger logger = LoggerFactory.getLogger("DB");
 	public static final int MAXPLAYER = 10;
 	public static final int MAXROOM = MAXPLAYER;
 	
@@ -29,7 +28,6 @@ public class RunServer {
 	}
 
 	public void run() {
-		logger.info("서버 실행");
 
 		// 쓰레드풀 생성		
 		ExecutorService pool = Executors.newFixedThreadPool(MAXPLAYER);
@@ -53,12 +51,9 @@ public class RunServer {
 			} // while
 
 		} catch (BindException e) {
-			logger.error("서버가 이미 실행중입니다");
 			e.printStackTrace();
 		} catch (UnknownHostException e) {
-			logger.error(e.getMessage(), e);
 		} catch (IOException e) {
-			logger.error(e.getMessage(), e);
 		} finally {
 			pool.shutdown();
 		}
