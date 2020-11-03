@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import dao.ServerDAO;
 
 public class RunServer {
-	private static final Logger logger = LoggerFactory.getLogger(RunServer.class);
+	private static final Logger logger = LoggerFactory.getLogger("DB");
 	public static final int MAXPLAYER = 10;
 	public static final int MAXROOM = MAXPLAYER;
 	
