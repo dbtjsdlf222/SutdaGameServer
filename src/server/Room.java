@@ -23,6 +23,7 @@ import vo.Protocol;
 public class Room extends ServerMethod {
 
 	private static final Logger logger = LoggerFactory.getLogger(Room.class);
+	@JsonIgnore
 	private static int increaseRoomNo = 1;
 	private int roomNo;		// 방 번호
 	private long startMoney; // 시작 금액
@@ -45,15 +46,15 @@ public class Room extends ServerMethod {
 	private boolean gameStarted = false;
 	private boolean allIn = false;
 	// 생성자
-	public Room() {
-		System.out.println("생성자 : " + increaseRoomNo);
-		roomNo = increaseRoomNo++;
-		cardShuffle();
-	} // Room()
+	public Room() {} // Room()
 
 	@JsonIgnore
 	public int getPlayerSize() {
 		return playerMap.size();
+	}
+	
+	public void increaseRoomNo() {
+		roomNo = increaseRoomNo++;
 	}
 
 	public String checkStatus(PlayerVO vo) {
