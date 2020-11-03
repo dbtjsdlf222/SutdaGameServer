@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.slf4j.Logger;
 
 import dao.ServerDAO;
@@ -18,10 +21,15 @@ import vo.Protocol;
 
 public class ServerMethod {
 	private static final Logger logger = LoggerFactory.getLogger(ServerMethod.class);
+	@JsonIgnore
 	protected PlayerVO thisPlayerVO = new PlayerVO();
+	@JsonIgnore
 	protected static Hashtable<String, PlayerVO> lobbyPlayerList = new Hashtable<String,PlayerVO>();
+	@JsonIgnore
 	protected RoomOperator ro = RoomOperator.getInstance(); 
+	@JsonIgnore
 	protected ServerDAO serverDAO = new ServerDAO();
+	@JsonIgnore
 	protected static Hashtable<String, PrintWriter> playerOnlineList = new Hashtable<String, PrintWriter>();
 	
 	public void exitPlayer() {
@@ -35,9 +43,11 @@ public class ServerMethod {
 	} //exitPlayer
 
 	public void lobbyBroadcast(Packet packet) {
+		System.out.println("packet : " + packet);
 		for (Entry<String,PlayerVO> e : lobbyPlayerList.entrySet()) {
 			Packing.sender(e.getValue().getPwSocket(), packet);
 		}
+		System.out.println("여기입니다.");
 	} //broadcast
 
 	public void extraMoney() {

@@ -46,6 +46,7 @@ public class Room extends ServerMethod {
 	private boolean allIn = false;
 	// 생성자
 	public Room() {
+		System.out.println("생성자 : " + increaseRoomNo);
 		roomNo = increaseRoomNo++;
 		cardShuffle();
 	} // Room()

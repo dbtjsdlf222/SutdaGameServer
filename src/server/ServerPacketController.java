@@ -133,13 +133,22 @@ public class ServerPacketController extends ServerMethod {
 			}
 			
 		case Protocol.MAKE_ROOM:
-			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO,packet.getRoom()));
+			Room makeRoom = new Room();
+			makeRoom.setTitle(packet.getRoom().getTitle());
+			if(!packet.getRoom().getPassword().equals(""))
+				makeRoom.setPassword(packet.getRoom().getPassword());
+			makeRoom.setMaxPlayer(packet.getRoom().getMaxPlayer());
+			makeRoom.setStartMoney(packet.getRoom().getStartMoney());
+			makeRoom.setPrivateRoom(packet.getRoom().isPrivateRoom());
+			
+			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO,makeRoom));
 			lobbyExitBroadcast();
 			
 			thisPlayerVO.setIndex(0);	//첫 플레이어로 초기화
 			packet.setPlayerVO(thisPlayerVO);
 			packet.setMotion(0+"");		//방장 인덱스
 			packet.setProtocol(Protocol.MAKE_ROOM);
+			packet.setRoom(makeRoom);
 			
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			lobbyReloadBroadcast();
@@ -164,7 +173,9 @@ public class ServerPacketController extends ServerMethod {
 			//엔터 룸시 방이 꽉 찻는지 체크
 			//게임 중인지 체크
 			String reason = null;
+			System.out.println("여기1");
 			if((reason=ro.getRoom(roomNo).checkStatus(thisPlayerVO))!=null) {
+				System.out.println("여기2");
 				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SERVER_MESSAGE,reason);
 				return;
 			}
