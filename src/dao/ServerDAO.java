@@ -217,7 +217,7 @@ public class ServerDAO {
 	}
 
 	public PlayerVO login(String id, String pw) {
-		String sql = "SELECT no,id,password,nickname,money,win,lose,admin,`character` FROM player WHERE id=? AND password=?";
+		String sql = "SELECT no,id,password,nickname,money,win,lose,admin,`character` FROM player WHERE id=?";
 		ResultSet rs = null;
 
 		try {
@@ -239,6 +239,7 @@ public class ServerDAO {
 				int character = rs.getInt(9);
 				System.out.println("rwPW "+rsPW);
 				System.out.println("pw "+pw);
+				
 				if(BCrypt.checkpw(pw, rsPW)) {
 					return new PlayerVO(no, rsID, rsPW, nickname, money, admin, win, lose, character);
 				} else {
