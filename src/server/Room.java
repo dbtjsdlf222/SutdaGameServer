@@ -155,6 +155,7 @@ public class Room extends ServerMethod {
 			if(beforeBetMoney * 2 > turnHaveMoney)
 				arr[2] += "_";
 		}
+		
 		arr[3] = Protocol.Quater;
 		arr[8] = (totalMoney/4) + beforeBetMoney + "";
 			if((totalMoney/4) + beforeBetMoney > turnHaveMoney)
@@ -439,7 +440,8 @@ public class Room extends ServerMethod {
 		case Protocol.Call:
 			if(playerMap.get(turn).getMoney() <= beforeBetMoney) {
 				playerMap.get(turn).setAllIn(true);
-				totalMoney += playerMap.get(turn).getMoney();
+				betMoney = playerMap.get(turn).getMoney();
+				totalMoney += betMoney; 
 			} else {
 				betMoney = beforeBetMoney;
 				totalMoney += betMoney;
@@ -471,7 +473,7 @@ public class Room extends ServerMethod {
 			break; // Call
 
 		case Protocol.Allin:
-			betMoney = beforeBetMoney + playerMap.get(turn).getMoney();
+			betMoney = playerMap.get(turn).getMoney();
 			playerMap.get(turn).setAllIn(true);
 			totalMoney += betMoney;    
 			lastBetIdx = turn;
@@ -520,8 +522,8 @@ public class Room extends ServerMethod {
 		} // for
 		// 방장이 죽으면 다음 턴 사람한테 넘어간다
 		
-		
-		beforeBetMoney = betMoney;
+		if(!proBet.equals(Protocol.Die))
+			beforeBetMoney = betMoney;
 		
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 		
