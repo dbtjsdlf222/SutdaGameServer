@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.slf4j.LoggerFactory;
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -91,16 +92,10 @@ public class ServerDAO {
 	}
 
 	public int playerJoin(PlayerVO vo) throws ClassNotFoundException {
-		InetAddress local = null;
-		try {
-			local = InetAddress.getLocalHost();
-		} catch (UnknownHostException e1) {
-		}
 
 		String id = null;
 		String pw = null;
 		String nick = null;
-		String ip = local.getHostAddress();
 		int character = 0;
 		int result = 0;
 
@@ -108,7 +103,7 @@ public class ServerDAO {
 		pw = vo.getPassword();
 		nick = vo.getNic();
 		character = vo.getCha();
-
+		pw = BCrypt.hashpw(pw, BCrypt.gensalt());
 		String sql = "INSERT INTO player(`id`, `password`, `nickname`, `character`) VALUES (?,?,?,?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -242,13 +237,13 @@ public class ServerDAO {
 				int lose = rs.getInt(7);
 				boolean admin = rs.getBoolean(8);
 				int character = rs.getInt(9);
-				String ip = null;
-				try {
-					ip = InetAddress.getLocalHost().getHostAddress();
-				} catch (UnknownHostException e) {
+				
+				if(BCrypt.checkpw(pw, rsPW)) {
+					return new PlayerVO(no, rsID, rsPW, nickname, money, admin, win, lose, character);
+				} else {
+					return null;
 				}
 
-				return new PlayerVO(no, rsID, rsPW, nickname, money, admin, win, lose, character);
 			} catch (SQLException e) {
 				return null;
 			}
