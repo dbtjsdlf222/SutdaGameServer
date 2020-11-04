@@ -25,7 +25,6 @@ public class ServerPacketController extends ServerMethod {
 	} //ServerPacketController();
 	
 	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
-			System.out.println("여이요");
 		
 		switch (packet.getProtocol()) {
 		
@@ -171,9 +170,7 @@ public class ServerPacketController extends ServerMethod {
 			//엔터 룸시 방이 꽉 찻는지 체크
 			//게임 중인지 체크
 			String reason = null;
-			System.out.println("여기1");
 			if((reason=ro.getRoom(roomNo).checkStatus(thisPlayerVO))!=null) {
-				System.out.println("여기2");
 				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SERVER_MESSAGE,reason);
 				return;
 			}

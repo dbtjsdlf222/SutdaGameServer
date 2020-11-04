@@ -42,11 +42,9 @@ public class ServerMethod {
 	} //exitPlayer
 
 	public void lobbyBroadcast(Packet packet) {
-		System.out.println("packet : " + packet);
 		for (Entry<String,PlayerVO> e : lobbyPlayerList.entrySet()) {
 			Packing.sender(e.getValue().getPwSocket(), packet);
 		}
-		System.out.println("여기입니다.");
 	} //broadcast
 
 	public void extraMoney() {

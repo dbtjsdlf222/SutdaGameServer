@@ -38,7 +38,6 @@ public class RunServer {
 	       @Override
 	       public void run() {
 	          new ServerDAO().initMoneyChage();
-	          System.out.println("비상금 서비스 초기화 실행");
 	       }
 	    };
 	    timer.schedule(task, 0, 24*60*60*1000);
