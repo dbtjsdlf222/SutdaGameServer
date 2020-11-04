@@ -223,7 +223,6 @@ public class ServerDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
-			pstmt.setString(2, pw);
 			rs = pstmt.executeQuery();
 			rs.next();
 
@@ -237,8 +236,6 @@ public class ServerDAO {
 				int lose = rs.getInt(7);
 				boolean admin = rs.getBoolean(8);
 				int character = rs.getInt(9);
-				System.out.println("rwPW "+rsPW);
-				System.out.println("pw "+pw);
 				
 				if(BCrypt.checkpw(pw, rsPW)) {
 					return new PlayerVO(no, rsID, rsPW, nickname, money, admin, win, lose, character);
