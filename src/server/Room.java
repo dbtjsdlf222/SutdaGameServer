@@ -148,18 +148,21 @@ public class Room extends ServerMethod {
 			if(beforeBetMoney==0) {
 				arr[6] = "-";
 				arr[7] = "-";
-			}else {
+			} else {
 				arr[7] = beforeBetMoney *2 + "";	
 			}
 			
-			if(beforeBetMoney * 2 > turnHaveMoney)
+			if((beforeBetMoney * 2 > turnHaveMoney) || allIn)
 				arr[2] += "_";
+				arr[7] = "-";
 		}
 		
 		arr[3] = Protocol.Quater;
 		arr[8] = (totalMoney/4) + beforeBetMoney + "";
-			if((totalMoney/4) + beforeBetMoney > turnHaveMoney)
+			if(((totalMoney/4) + beforeBetMoney > turnHaveMoney)|| allIn) {
 				arr[3]+= "_";
+				arr[8]="-";
+			}
 				
 		arr[4] = Protocol.Half;
 		arr[9] = (totalMoney/2) + beforeBetMoney + "";
@@ -436,7 +439,7 @@ public class Room extends ServerMethod {
 			break;
 
 		case Protocol.Quater:
-			betMoney = beforeBetMoney + (totalMoney / 4);
+			betMoney = totalMoney / 4;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
 			break;
