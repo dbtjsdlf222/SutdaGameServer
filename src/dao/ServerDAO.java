@@ -122,7 +122,9 @@ public class ServerDAO {
 	      String query = "update player set money_charge = 5";
 	      try {
 	         pstmt = conn.prepareStatement(query);
+	         pstmt.executeUpdate();
 	      } catch (SQLException e) {
+	    	  e.printStackTrace();
 	      }
 	   }
 	   
@@ -135,6 +137,7 @@ public class ServerDAO {
 
 	         pstmt.executeUpdate();
 	      } catch (SQLException e) {
+	    	  e.printStackTrace();
 	      }
 	   }
 	   
@@ -149,6 +152,7 @@ public class ServerDAO {
 	         rs.next();
 	         charge=rs.getInt(1);
 	      } catch (SQLException e) {
+	    	  e.printStackTrace();
 	      }
 	      return charge;
 	   }
