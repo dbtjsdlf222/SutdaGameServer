@@ -167,6 +167,9 @@ public class Room extends ServerMethod {
 				arr[4]+= "_";
 		
 		arr[5] = Protocol.Allin;
+		if(playerMap.get(turn).isAllIn()) {
+			arr[5] +="_";
+		}
 
 		if (round == 1) {
 			if(round1First) {	//1라운드 첫 턴은 다이 하프만 가능
@@ -182,6 +185,7 @@ public class Room extends ServerMethod {
 		} //if (round == 1) else
 		return arr;
 	} //setButton();
+	
 	/**
 	 * @return 플레이어 버튼 비활성
 	 */
@@ -630,6 +634,7 @@ public class Room extends ServerMethod {
 		cardShuffle(); 		// 카드큐를 섞는다
 		lastBetIdx = 0;
 		beforeBetMoney = 0;
+		totalMoney = 0;
 		for (Entry<Integer, PlayerVO> playerVO : playerMap.entrySet()) {
 			playerVO.getValue().setLive(true);
 			playerVO.getValue().pay(startMoney);
