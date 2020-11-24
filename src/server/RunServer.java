@@ -12,7 +12,12 @@ import java.util.concurrent.Executors;
 
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.jdbc.log.Slf4JLogger;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 
 import dao.ServerDAO;
@@ -23,7 +28,10 @@ public class RunServer {
 	
 	private int port = 4886;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JsonProcessingException {
+		System.out.println(BCrypt.gensalt());
+		ObjectMapper mapper = new ObjectMapper();
+		System.out.println(mapper.writeValueAsString("a"));
 		new RunServer().run();
 	}
 
