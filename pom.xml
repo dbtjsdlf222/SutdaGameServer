@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>SutDa</groupId>
 	<artifactId>SutDa</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -18,7 +18,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
+				<version>2.3.2</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
