@@ -1,36 +1,25 @@
 package dao;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.slf4j.LoggerFactory;
 import org.mindrot.jbcrypt.BCrypt;
-import org.slf4j.Logger;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import connection.DBCon;
-import vo.Packet;
 import vo.PlayerVO;
 
 public class ServerDAO {
 	
-	
-	private Connection conn;
+	private static Connection conn;
 	private PreparedStatement pstmt;
 
 	public ServerDAO() {
-		try {
+		if(conn==null) {
 			conn = new DBCon().getMysqlConn();
-		} catch (ClassNotFoundException e) {
 		}
-	} //constructer();
+	} //Constructor();
 	
 	public PlayerVO selectOnePlayerWithNo(int playerNo) {
 		
@@ -123,6 +112,7 @@ public class ServerDAO {
 	      try {
 	         pstmt = conn.prepareStatement(query);
 	         pstmt.executeUpdate();
+	         System.out.println("initMoneyChage");
 	      } catch (SQLException e) {
 	    	  e.printStackTrace();
 	      }

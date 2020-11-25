@@ -20,16 +20,11 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ServerMethod {
-	@JsonIgnore
-	protected PlayerVO thisPlayerVO = new PlayerVO();
-	@JsonIgnore
-	protected static Hashtable<String, PlayerVO> lobbyPlayerList = new Hashtable<String,PlayerVO>();
-	@JsonIgnore
-	protected RoomOperator ro = RoomOperator.getInstance(); 
-	@JsonIgnore
-	protected ServerDAO serverDAO = new ServerDAO();
-	@JsonIgnore
-	protected static Hashtable<String, PrintWriter> playerOnlineList = new Hashtable<String, PrintWriter>();
+	@JsonIgnore protected PlayerVO thisPlayerVO = new PlayerVO();
+	@JsonIgnore protected static Hashtable<String, PlayerVO> lobbyPlayerList = new Hashtable<String,PlayerVO>();
+	@JsonIgnore protected RoomOperator ro = RoomOperator.getInstance(); 
+	@JsonIgnore protected ServerDAO serverDAO = new ServerDAO();
+	@JsonIgnore protected static Hashtable<String, PrintWriter> playerOnlineList = new Hashtable<String, PrintWriter>();
 	
 	public void exitPlayer() {
 

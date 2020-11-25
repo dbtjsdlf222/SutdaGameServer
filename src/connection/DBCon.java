@@ -11,8 +11,10 @@ import org.slf4j.Logger;
 
 public class DBCon {
 
-	
 	private Connection conn = null;
+	private DBCon instance = null;
+	
+	public DBCon() {}
 	
 //	public Connection getOracleConn() {
 //		String driver ="oracle.jdbc.driver.OracleDriver";
@@ -22,14 +24,7 @@ public class DBCon {
 //
 //		return new DBCon().dbconn(driver, dburl, dbid, dbpw);
 //	}
-	public static void main(String[] args) {
-		try {
-			new DBCon().getMysqlConn();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	public Connection getMysqlConn() throws ClassNotFoundException {
+	public Connection getMysqlConn() {
 		String driver = "com.mysql.jdbc.Driver";
 		String dburl = "jdbc:mysql://sunx.cafe24.com:3306/sunx?characterEncoding=UTF-8&serverTimezone=UTC";
 		String dbid = "sunx";
@@ -42,6 +37,7 @@ public class DBCon {
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(dburl, dbid, dbpw);
+			System.out.println("DB 연결 성공");
 		} catch (SQLException e) {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
