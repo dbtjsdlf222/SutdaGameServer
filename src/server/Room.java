@@ -22,6 +22,7 @@ import vo.Protocol;
 
 public class Room extends ServerMethod {
 
+	private static final Logger logger = LoggerFactory.getLogger(Room.class);
 	@JsonIgnore
 	private static int increaseRoomNo = 1;
 	private int roomNo;		// 방 번호
@@ -240,6 +241,7 @@ public class Room extends ServerMethod {
 		}
 		message += ", " + Protocol.getName(pac.getProtocol()) + "))] " + pac;
 
+		logger.info(message);
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), pac);
 		}
@@ -268,7 +270,7 @@ public class Room extends ServerMethod {
 		}
 		message += ", " + Protocol.getName(pac.getProtocol()) + "))] " + pac;
 		
-		
+		logger.info(message);
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			if(s.getValue().getNo()==no) continue;
 			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), pac);
@@ -436,12 +438,14 @@ public class Room extends ServerMethod {
 			betMoney = beforeBetMoney + (totalMoney / 2);
 			totalMoney += betMoney;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Quater:
 			betMoney = totalMoney / 4;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Call:
@@ -454,6 +458,7 @@ public class Room extends ServerMethod {
 				totalMoney += betMoney;
 			}
 			
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			int nextTurn = turn ;
 			
 			for (int j = 1; j < 5; j++) {
@@ -484,23 +489,27 @@ public class Room extends ServerMethod {
 			playerMap.get(turn).setAllIn(true);
 			totalMoney += betMoney;    
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Check:
 			betMoney = 0;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Pping:
 			betMoney = startMoney;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Ddadang:
 			betMoney = beforeBetMoney * 2;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Die:

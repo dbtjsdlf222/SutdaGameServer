@@ -16,6 +16,7 @@ import vo.Protocol;
 
 public class Packing {
 	
+	private static final Logger logger = LoggerFactory.getLogger(Packing.class);
 	
 	/**
 	 * 
@@ -24,6 +25,7 @@ public class Packing {
 	 * @param vo	PlayerVO
 	 */
 	public static void sender(PrintWriter pw, String pro, PlayerVO vo) {
+		logger.info("[Send(" + Protocol.getName(pro) +"(" + vo.getNo() +", " + vo.getNic()+"))] " + vo);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			pw.println(mapper.writeValueAsString(new Packet(pro,vo)));
@@ -38,6 +40,7 @@ public class Packing {
 	 * @param room
 	 */
 	public static void sender(PrintWriter pw, String pro, Room room) {
+		logger.info("[Send(" + Protocol.getName(pro) +"(" + room.getTitle()+", " + room.getPassword()+"))] " + room);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			pw.println(mapper.writeValueAsString(new Packet(pro,room)));
@@ -51,8 +54,8 @@ public class Packing {
 	 * @param packet
 	 */
 	public static void sender(PrintWriter pw, Packet packet) {
-		try { }
-		catch(NullPointerException e) { }
+		try { logger.info("[Send(" + Protocol.getName(packet.getProtocol()) +"(" + packet.getPlayerVO().getNo() +", " + packet.getPlayerVO().getNic()+"))] " + packet); }
+		catch(NullPointerException e) { logger.info("[Send(" + Protocol.getName(packet.getProtocol()) + ")] " + packet); }
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			pw.println(mapper.writeValueAsString(packet));
@@ -67,6 +70,7 @@ public class Packing {
 	 * @param motion
 	 */
 	public static void sender(PrintWriter pw, Packet packet,String motion) {
+		logger.info("[Send(" + motion +"(" + packet.getPlayerVO().getNo() +", " + packet.getPlayerVO().getNic()+"))] " + packet);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			packet.setMotion(motion);
@@ -81,6 +85,7 @@ public class Packing {
 	 * @param pro
 	 */
 	public static void sender(PrintWriter pw, String pro) {
+		logger.info("[Send(" + pro +")]");
 		ObjectMapper mapper = new ObjectMapper();
 		Packet packet = new Packet();
 		packet.setProtocol(pro);
@@ -96,6 +101,7 @@ public class Packing {
 	 * @param motion
 	 */
 	public static void sender(PrintWriter pw, String pro, String motion) {
+		logger.info("[Send(" + pro +")]");
 		ObjectMapper mapper = new ObjectMapper();
 		Packet packet = new Packet();
 		packet.setProtocol(pro);

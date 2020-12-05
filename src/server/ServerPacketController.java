@@ -17,6 +17,7 @@ import vo.Protocol;
 
 public class ServerPacketController extends ServerMethod {
 	protected Socket socket;
+	private static final Logger logger = LoggerFactory.getLogger(ServerPacketController.class);
 
 	
 	public ServerPacketController(Socket socket) {
@@ -25,6 +26,8 @@ public class ServerPacketController extends ServerMethod {
 	} //ServerPacketController();
 	
 	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
+		
+		logger.info("[Receive(" + Protocol.getName(packet.getProtocol()) + ")] " + packet);
 		
 		switch (packet.getProtocol()) {
 		
@@ -160,6 +163,7 @@ public class ServerPacketController extends ServerMethod {
 			room.exitPlayer(thisPlayerVO);
 			thisPlayerVO.setRoomNo(0);
 			lobbyPlayerList.put(thisPlayerVO.getNic(),thisPlayerVO);
+			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.EXIT_ROOM);
 			room.roomSpeakerNotThisPlayer(packet, thisPlayerVO.getNo());
 			lobbyReloadBroadcast();
 			break;
