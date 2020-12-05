@@ -10,10 +10,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.slf4j.LoggerFactory;
-
-
-import org.slf4j.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import dao.ServerDAO;
 
@@ -23,21 +20,21 @@ public class RunServer {
 	
 	private int port = 4886;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JsonProcessingException {
 		new RunServer().run();
 	}
 
 	public void run() {
-
+		ServerDAO sdao = new ServerDAO();
 		// 쓰레드풀 생성		
 		ExecutorService pool = Executors.newFixedThreadPool(MAXPLAYER);
 		
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
-	       
+		
 	       @Override
 	       public void run() {
-	          new ServerDAO().initMoneyChage();
+	    	   sdao.initMoneyChage();
 	       }
 	    };
 	    timer.schedule(task, 0, 24*60*60*1000);

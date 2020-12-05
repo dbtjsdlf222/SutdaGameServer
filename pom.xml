@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>SutDa</groupId>
 	<artifactId>SutDa</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -28,6 +28,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
 				<configuration>
 					<archive>
 						<manifest>
