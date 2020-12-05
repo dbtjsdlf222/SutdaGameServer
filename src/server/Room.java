@@ -9,6 +9,9 @@ import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import util.CalcCardLevel;
