@@ -1,6 +1,7 @@
 package server;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map.Entry;
 
@@ -113,13 +114,13 @@ public class ServerPacketController extends ServerMethod {
 						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님이 게임방에 없습니다.");
 					}else {
 						//추방
-						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님을 추방하셨습니다.");
-						
+						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님이 추방당하였습니다.");
 						Packet packet1 = new Packet();
 						packet1.setProtocol(Protocol.KICK);
 						packet1.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
-						
-						Packing.sender(ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().get(b).getPwSocket(),packet1);
+						PrintWriter kickPW= ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().get(b).getPwSocket();
+						Packing.sender(kickPW,packet1);
+						Packing.sender(kickPW,Protocol.SERVER_MESSAGE,"방에서 추방 당하였습니다.");
 					}
 				}
 			}

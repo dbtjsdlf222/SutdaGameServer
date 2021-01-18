@@ -348,7 +348,7 @@ public class Room extends ServerMethod {
 			packet.setProtocol(Protocol.EXIT_OTHER_ROOM);
 			packet.setMotion(Integer.toString(playerIndex));
 			roomSpeaker(packet);
-			roomSpeaker(new Packet(Protocol.MESSAGE, "알림 ["+ vo.getNic() + "]님이 퇴실하셨습니다."));
+			roomSpeaker(new Packet(Protocol.MESSAGE, "["+ vo.getNic() + "]님이 퇴실하셨습니다."));
 		
 			if (masterIndex == playerIndex) {
 				//방장 다음차례의 사람을 방장으로 지정 
@@ -360,11 +360,12 @@ public class Room extends ServerMethod {
 					if(isGameStarted()) {
 						if(playerMap.get(idx).isLive()) { 
 							masterIndex = idx;
-							roomSpeaker(new Packet(Protocol.MESSAGE, "알림 ["+ vo.getNic() + "]님이 퇴실하셨습니다."));
+							master=playerMap.get(masterIndex).getNic();
 							break;
 						}	//if						
 					} else {
 						masterIndex = idx;
+						master=playerMap.get(masterIndex).getNic();
 						this.roomSpeaker(new Packet(Protocol.CHANGE_MASTER, masterIndex + ""));
 						break;
 					} //if~else
