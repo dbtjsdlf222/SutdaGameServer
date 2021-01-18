@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import operator.RoomOperator;
 import util.Packing;
 import util.Protocol;
@@ -164,7 +165,6 @@ public class ServerPacketController extends ServerMethod {
 			thisPlayerVO.setRoomNo(0);
 			lobbyPlayerList.put(thisPlayerVO.getNic(),thisPlayerVO);
 			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.EXIT_ROOM);
-			room.roomSpeakerNotThisPlayer(packet, thisPlayerVO.getNo());
 			lobbyReloadBroadcast();
 			break;
 
@@ -196,7 +196,7 @@ public class ServerPacketController extends ServerMethod {
 
 			break;
 
-		case Protocol.RELOAD_PlAYERLIST:
+		case Protocol.RELOAD_PlAYER_LIST:
 			packet.setRoomPlayerList(ro.getRoom(thisPlayerVO.getRoomNo()).getList());
 			packet.setPlayerVO(thisPlayerVO);
 			packet.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
@@ -311,7 +311,7 @@ public class ServerPacketController extends ServerMethod {
 			}
 			break;
 			
-		case Protocol.EXTRAMONEY:
+		case Protocol.EXTRA_MONEY:
 			int count = serverDAO.moneyChargeCheck(thisPlayerVO.getNo());
 			
 			if(count > 0) {

@@ -33,7 +33,7 @@ public class ServerMethod {
 		} else {
 			lobbyExitBroadcast();
 		} // if~else
-		playerOnlineList.remove(thisPlayerVO.getNic());		
+		playerOnlineList.remove(thisPlayerVO.getNic());
 	} //exitPlayer
 
 	public void lobbyBroadcast(Packet packet) {

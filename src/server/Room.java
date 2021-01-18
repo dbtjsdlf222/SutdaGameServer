@@ -360,7 +360,7 @@ public class Room extends ServerMethod {
 					if(isGameStarted()) {
 						if(playerMap.get(idx).isLive()) { 
 							masterIndex = idx;
-							this.roomSpeaker(new Packet(Protocol.CHANGE_MASTER, masterIndex + ""));
+							roomSpeaker(new Packet(Protocol.MESSAGE, "알림 ["+ vo.getNic() + "]님이 퇴실하셨습니다."));
 							break;
 						}	//if						
 					} else {
@@ -398,7 +398,7 @@ public class Room extends ServerMethod {
 	
 		String[] arr = setButton();
 		
-		Packet packet1 = new Packet(Protocol.SHOWNEEDMONEY, arr);
+		Packet packet1 = new Packet(Protocol.SHOW_NEED_MONEY, arr);
 		roomSpeaker(packet1);
 
 		//차례 클라이언트에게 button배열 전송
