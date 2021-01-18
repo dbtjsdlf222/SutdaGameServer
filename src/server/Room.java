@@ -348,7 +348,7 @@ public class Room extends ServerMethod {
 			packet.setProtocol(Protocol.EXIT_OTHER_ROOM);
 			packet.setMotion(Integer.toString(playerIndex));
 			roomSpeaker(packet);
-			roomSpeaker(new Packet(Protocol.MESSAGE, "["+ vo.getNic() + "]님이 퇴실하셨습니다."));
+			roomSpeaker(new Packet(Protocol.SERVER_MESSAGE, "["+ vo.getNic() + "]님이 퇴실하셨습니다."));
 		
 			if (masterIndex == playerIndex) {
 				//방장 다음차례의 사람을 방장으로 지정 

@@ -97,11 +97,10 @@ public class ServerPacketController extends ServerMethod {
 				//방장이 아닌경우
 				if(!ro.getRoom(thisPlayerVO.getRoomNo()).getMaster().equals(thisPlayerVO.getNic())) {
 					Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"방장이 아닌 플레이어는 사용할 수 없습니다.");
-				}
-				//본인 게임 시작 했을 경우
-				if(ro.getRoom(thisPlayerVO.getRoomNo()).isGameStarted()) {
+				} else if(ro.getRoom(thisPlayerVO.getRoomNo()).isGameStarted()) {
+					//게임이 시작 했을 경우
 					Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"게임중엔 추방이 불가능 합니다.");
-				}else {
+				} else {
 					//상대가 방에 없는 경우
 					Integer  b = null;
 					for (Integer a : ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().keySet()) {
@@ -111,7 +110,7 @@ public class ServerPacketController extends ServerMethod {
 						}
 					}
 					if(b == null) {
-						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님이 게임방에 없습니다.");
+						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"닉네임이 잘못 입력 되었거나 게임방에 없습니다.");
 					}else {
 						//추방
 						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님이 추방당하였습니다.");
@@ -119,8 +118,7 @@ public class ServerPacketController extends ServerMethod {
 						packet1.setProtocol(Protocol.KICK);
 						packet1.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
 						PrintWriter kickPW= ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().get(b).getPwSocket();
-						Packing.sender(kickPW,packet1);
-						Packing.sender(kickPW,Protocol.SERVER_MESSAGE,"방에서 추방 당하였습니다.");
+						Packing.sender(kickPW, packet1);
 					}
 				}
 			}
