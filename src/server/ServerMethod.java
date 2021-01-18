@@ -15,9 +15,9 @@ import dao.ServerDAO;
 import music.MusicPlayer;
 import operator.RoomOperator;
 import util.Packing;
+import util.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
-import vo.Protocol;
 
 public class ServerMethod {
 	@JsonIgnore protected PlayerVO thisPlayerVO = new PlayerVO();

@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import util.Packing;
+import util.Protocol;
 import vo.Packet;
-import vo.Protocol;
 
 public class ServerReceiver extends Thread { // Server
 

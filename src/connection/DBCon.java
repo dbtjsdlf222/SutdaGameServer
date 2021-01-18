@@ -42,7 +42,6 @@ public class DBCon {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
 		return conn;
 	} //dbconn
 	

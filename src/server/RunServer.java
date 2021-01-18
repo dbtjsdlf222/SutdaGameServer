@@ -17,6 +17,7 @@ import dao.ServerDAO;
 public class RunServer {
 	public static final int MAXPLAYER = 10;
 	public static final int MAXROOM = MAXPLAYER;
+	public static int i = 0;
 	
 	private int port = 4886;
 
@@ -37,7 +38,9 @@ public class RunServer {
 	    	   sdao.initMoneyChage();
 	       }
 	    };
-	    timer.schedule(task, 0, 24*60*60*1000);
+	    timer.schedule(task, 0, 24*60*60*1000);	//24시간 마다 실행
+//	    timer.schedule(task, 0, 60*1000);		//   1분 마다 실행
+	    
 		
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 			while (true) {

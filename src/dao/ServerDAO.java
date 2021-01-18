@@ -89,10 +89,9 @@ public class ServerDAO {
 		int result = 0;
 
 		id = vo.getId();
-		pw = vo.getPassword();
+		pw = BCrypt.hashpw(vo.getPassword(), BCrypt.gensalt()); //암호화
 		nick = vo.getNic();
 		character = vo.getCha();
-		pw = BCrypt.hashpw(pw, BCrypt.gensalt());
 		String sql = "INSERT INTO player(`id`, `password`, `nickname`, `character`) VALUES (?,?,?,?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -112,7 +111,6 @@ public class ServerDAO {
 	      try {
 	         pstmt = conn.prepareStatement(query);
 	         pstmt.executeUpdate();
-	         System.out.println("initMoneyChage");
 	      } catch (SQLException e) {
 	    	  e.printStackTrace();
 	      }

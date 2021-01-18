@@ -16,28 +16,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import util.CalcCardLevel;
 import util.Packing;
+import util.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
-import vo.Protocol;
 
 public class Room extends ServerMethod {
 
 	private static final Logger logger = LoggerFactory.getLogger(Room.class);
 	@JsonIgnore
 	private static int increaseRoomNo = 1;
-	private int roomNo;		// 방 번호
+	private int roomNo;		 // 방 번호
 	private long startMoney; // 시작 금액
 	private String title = "";
 	private String password = "";
 	private int maxPlayer;
 	private boolean  privateRoom = false;	//비밀번호방
 	private Map<Integer, PlayerVO> playerMap = new Hashtable<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
-	private float[] cardArr = new float[20]; // 카드각
+	private float[] cardArr = new float[20];				// 카드각
 	private Queue<Float> shuffledCard = new LinkedList<>(); // 위에서 부터 카드 한장씩 배분하기위한 queue
 	private Integer masterIndex; // 방장 or 선판 이긴거
 	private String master; 		 // 방장(선)이 누구인지
 	private long totalMoney; 	 // 총 배팅액의 합
-	private long beforeBetMoney;	 	 // 전 플레이어의 배팅액
+	private long beforeBetMoney; // 전 플레이어의 배팅액
 	private int round; 			 // 몇번째 카드 배팅인지
 	private int lastBetIdx;	 	 // 마지막으로 배팅한 플레이어가 몇번째 사람인지
 	private int turn; 			 // 누구의 차례인지
@@ -45,6 +45,7 @@ public class Room extends ServerMethod {
 	private boolean round2First = false;	// 첫 차례 버튼세팅 조건 변수
 	private boolean gameStarted = false;
 	private boolean allIn = false;
+	
 	// 생성자
 	public Room() {} // Room()
 
@@ -402,7 +403,6 @@ public class Room extends ServerMethod {
 
 		//차례 클라이언트에게 button배열 전송
 		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
-		
 
 		Packet packet = new Packet(Protocol.TURN, turn + "");
 		roomSpeaker(packet);
@@ -414,38 +414,38 @@ public class Room extends ServerMethod {
 		bet(Protocol.Die);
 	}
 
-	public void bet(String proBet) {
+	public void bet(String playerBet) {
 		long betMoney = 0;
 		int i = 0;
 		int winerIdx = 0;
 
 		// 1라운드 첫 배팅한 사람은 다이 하프만 가능
 		if(round1First) {
-			if(!proBet.equals(Protocol.Die)) {
+			if(!playerBet.equals(Protocol.Die)) {
 				round1First = false;
 			}
 		}
 		
 		// 2라운드 첫 배팅한 사람이 죽을 경우 다음 사람도 체크 삥 버튼으로 보냄
 		if(round2First) {
-			if(!Protocol.Die.equals(proBet)) {
+			if(!Protocol.Die.equals(playerBet)) {
 				round2First = false;
 			}
 		} //if(round2First);
 		
-		switch (proBet) {
+		switch (playerBet) {
 		case Protocol.Half:
 			betMoney = beforeBetMoney + (totalMoney / 2);
 			totalMoney += betMoney;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
+			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Quater:
 			betMoney = totalMoney / 4;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
+			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Call:
@@ -458,7 +458,7 @@ public class Room extends ServerMethod {
 				totalMoney += betMoney;
 			}
 			
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
+			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			int nextTurn = turn ;
 			
 			for (int j = 1; j < 5; j++) {
@@ -467,14 +467,15 @@ public class Room extends ServerMethod {
 				if (playerMap.get(nextTurn) == null || !playerMap.get(nextTurn).isLive()) {
 					continue;
 				} else {
+					System.out.println("nextTurn: "+nextTurn +" "+"lastBetIdx: "+ lastBetIdx);
 					if(nextTurn == lastBetIdx) {	//다음 사람이 마지막 판돈 올린 사람이면
 						if (round == 1) { 		// 1번째 카드 승부
 							round = 2;
 							handOutCard(); 		// 2번째 카드 카드 배분
 							beforeBetMoney = 0;
-						} else { // round 2~3
+						} else { 	// round 2~3
 							playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
-							roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
+							roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + playerBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 							gameResult();
 							return;
 						}
@@ -489,27 +490,27 @@ public class Room extends ServerMethod {
 			playerMap.get(turn).setAllIn(true);
 			totalMoney += betMoney;    
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
+			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Check:
 			betMoney = 0;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
+			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Pping:
 			betMoney = startMoney;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
+			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Ddadang:
 			betMoney = beforeBetMoney * 2;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
+			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Die:
@@ -538,20 +539,21 @@ public class Room extends ServerMethod {
 		} // for
 		// 방장이 죽으면 다음 턴 사람한테 넘어간다
 		
-		if(!proBet.equals(Protocol.Die))
+		if(!playerBet.equals(Protocol.Die))
 			beforeBetMoney = betMoney;
 		
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 		
-		roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
+		roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + playerBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 
 		// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
 		if (i <= 1) {
 			gameOver(winerIdx,null);
 			return;
-		}else
+		} else {
+			System.out.println("lastBetIdx: "+lastBetIdx);
 			turnProgress();
-		
+		}
 	} // bet();
 	
 	/**
