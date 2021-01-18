@@ -113,7 +113,6 @@ public class ServerPacketController extends ServerMethod {
 						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"닉네임이 잘못 입력 되었거나 게임방에 없습니다.");
 					}else {
 						//추방
-						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님이 추방당하였습니다.");
 						Packet packet1 = new Packet();
 						packet1.setProtocol(Protocol.KICK);
 						packet1.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
@@ -123,8 +122,6 @@ public class ServerPacketController extends ServerMethod {
 				}
 			}
 				
-			
-			
 			break;
 			
 //		case Protocol.FIND:
