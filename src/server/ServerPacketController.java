@@ -21,7 +21,6 @@ public class ServerPacketController extends ServerMethod {
 	protected Socket socket;
 	private static final Logger logger = LoggerFactory.getLogger(ServerPacketController.class);
 
-	
 	public ServerPacketController(Socket socket) {
 		this.socket = socket;
 		thisPlayerVO.setSocketWithBrPw(socket);

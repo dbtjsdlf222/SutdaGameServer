@@ -419,7 +419,7 @@ public class Room extends ServerMethod {
 		long betMoney = 0;
 		int i = 0;
 		int winerIdx = 0;
-
+		System.out.println("-----------------------");
 		// 1라운드 첫 배팅한 사람은 다이 하프만 가능
 		if(round1First) {
 			if(!playerBet.equals(Protocol.Die)) {
@@ -459,17 +459,20 @@ public class Room extends ServerMethod {
 				totalMoney += betMoney;
 			}
 			
-			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
+//			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			int nextTurn = turn ;
 			
 			for (int j = 1; j < 5; j++) {
-				nextTurn = (nextTurn + j) % 5;
+				nextTurn = (turn + j) % 5;
 				
+				System.out.println("nextTurn ["+nextTurn+"]");
 				if (playerMap.get(nextTurn) == null || !playerMap.get(nextTurn).isLive()) {
+					System.out.println("continue"+ " nextTurn ["+nextTurn+"]");
 					continue;
 				} else {
-					System.out.println("nextTurn: "+nextTurn +" "+"lastBetIdx: "+ lastBetIdx);
+					System.out.println(playerMap.get(turn).getNic()+"(Call) nextTurn ["+playerMap.get(nextTurn).getNic()+"("+nextTurn+")]");
 					if(nextTurn == lastBetIdx) {	//다음 사람이 마지막 판돈 올린 사람이면
+						System.out.println("nextTurn == lastBetIdx");
 						if (round == 1) { 		// 1번째 카드 승부
 							round = 2;
 							handOutCard(); 		// 2번째 카드 카드 배분
@@ -546,13 +549,14 @@ public class Room extends ServerMethod {
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 		
 		roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + playerBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
-
+		
+		System.out.println(playerMap.get(turn).getNic()+" ("+Protocol.getName(playerBet)+") lastBetIdx ["+ playerMap.get(lastBetIdx).getNic()+"]");
+		
 		// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
 		if (i <= 1) {
 			gameOver(winerIdx,null);
 			return;
 		} else {
-			System.out.println("lastBetIdx: "+lastBetIdx);
 			turnProgress();
 		}
 	} // bet();
