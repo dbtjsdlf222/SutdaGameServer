@@ -123,7 +123,7 @@ public class Room extends ServerMethod {
 	/**
 	 * @return 플레이어가 배팅 가능한 버튼 배열 return
 	 */
-	public String[] setButton() {
+	public String[] setButtonAndPrice() {
 		String[] arr = new String[10];
 		long turnHaveMoney = playerMap.get(turn).getMoney();
 		arr[0] = Protocol.Die;
@@ -150,13 +150,16 @@ public class Room extends ServerMethod {
 			if(beforeBetMoney==0) {
 				arr[6] = "-";
 				arr[7] = "-";
+				arr[1] = Protocol.Call+"_";
+				arr[2]=Protocol.Ddadang+"_";
 			} else {
 				arr[7] = beforeBetMoney *2 + "";	
 			}
 			
-			if((beforeBetMoney * 2 > turnHaveMoney) || allIn)
-				arr[2] += "_";
+			if((beforeBetMoney * 2 > turnHaveMoney) || allIn) {
+				arr[2] =Protocol.Ddadang+"_";
 				arr[7] = "-";
+			}
 		}
 		
 		arr[3] = Protocol.Quater;
@@ -397,7 +400,7 @@ public class Room extends ServerMethod {
 				break;
 		} //for
 	
-		String[] arr = setButton();
+		String[] arr = setButtonAndPrice();
 		
 		Packet packet1 = new Packet(Protocol.SHOW_NEED_MONEY, arr);
 		roomSpeaker(packet1);
@@ -419,7 +422,6 @@ public class Room extends ServerMethod {
 		long betMoney = 0;
 		int i = 0;
 		int winerIdx = 0;
-		System.out.println("-----------------------");
 		// 1라운드 첫 배팅한 사람은 다이 하프만 가능
 		if(round1First) {
 			if(!playerBet.equals(Protocol.Die)) {
@@ -459,20 +461,16 @@ public class Room extends ServerMethod {
 				totalMoney += betMoney;
 			}
 			
-//			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
+			logger.debug("Bet:[" + playerBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			int nextTurn = turn ;
 			
 			for (int j = 1; j < 5; j++) {
 				nextTurn = (turn + j) % 5;
 				
-				System.out.println("nextTurn ["+nextTurn+"]");
 				if (playerMap.get(nextTurn) == null || !playerMap.get(nextTurn).isLive()) {
-					System.out.println("continue"+ " nextTurn ["+nextTurn+"]");
 					continue;
 				} else {
-					System.out.println(playerMap.get(turn).getNic()+"(Call) nextTurn ["+playerMap.get(nextTurn).getNic()+"("+nextTurn+")]");
 					if(nextTurn == lastBetIdx) {	//다음 사람이 마지막 판돈 올린 사람이면
-						System.out.println("nextTurn == lastBetIdx");
 						if (round == 1) { 		// 1번째 카드 승부
 							round = 2;
 							handOutCard(); 		// 2번째 카드 카드 배분
@@ -549,8 +547,6 @@ public class Room extends ServerMethod {
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 		
 		roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + playerBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
-		
-		System.out.println(playerMap.get(turn).getNic()+" ("+Protocol.getName(playerBet)+") lastBetIdx ["+ playerMap.get(lastBetIdx).getNic()+"]");
 		
 		// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
 		if (i <= 1) {

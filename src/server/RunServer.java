@@ -18,7 +18,7 @@ public class RunServer {
 	public static final int MAXPLAYER = 10;
 	public static final int MAXROOM = MAXPLAYER;
 	public static int i = 0;
-	
+
 	private int port = 4886;
 
 	public static void main(String[] args) throws JsonProcessingException {
@@ -27,21 +27,20 @@ public class RunServer {
 
 	public void run() {
 		ServerDAO sdao = new ServerDAO();
-		// 쓰레드풀 생성		
+		// 쓰레드풀 생성
 		ExecutorService pool = Executors.newFixedThreadPool(MAXPLAYER);
-		
+
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
-		
-	       @Override
-	       public void run() {
-	    	   sdao.initMoneyChage();
-	       }
-	    };
-	    timer.schedule(task, 0, 24*60*60*1000);	//24시간 마다 실행
-//	    timer.schedule(task, 0, 60*1000);		//   1분 마다 실행
-	    
-		
+
+			@Override
+			public void run() {
+				sdao.initMoneyChage();
+			}
+		};
+		timer.schedule(task, 0, 24 * 60 * 60 * 1000); // 24시간 마다 실행
+		// timer.schedule(task, 0, 60*1000); // 1분 마다 실행
+
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다
@@ -56,7 +55,7 @@ public class RunServer {
 		} finally {
 			pool.shutdown();
 		}
-		
+
 	} // run();
 
 } // Accept();
