@@ -26,7 +26,7 @@ public class DBCon {
 //	}
 	public Connection getMysqlConn() {
 		String driver = "com.mysql.jdbc.Driver";
-		String dburl = "jdbc:mysql://sunx.cafe24.com:3306/sunx?characterEncoding=UTF-8&serverTimezone=UTC";
+		String dburl = "jdbc:mysql://sunx.cafe24.com:3306/sunx?characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true&validationQuery=select 1";
 		String dbid = "sunx";
 		String dbpw = "sun123@@";
 		
