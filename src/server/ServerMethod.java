@@ -29,9 +29,11 @@ public class ServerMethod {
 
 		if (thisPlayerVO.getRoomNo() != 0) {
 			ro.getRoom(thisPlayerVO.getRoomNo()).exitPlayer(thisPlayerVO);
+		} else if(thisPlayerVO.getNic()==null) {
+			return;
 		} else {
 			lobbyExitBroadcast();
-		} // if~else
+		}
 		playerOnlineList.remove(thisPlayerVO.getNic());
 	} //exitPlayer
 
