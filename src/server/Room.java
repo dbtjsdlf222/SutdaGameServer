@@ -184,6 +184,7 @@ public class Room extends ServerMethod {
 				arr[1] += "_";
 				arr[2] += "_";
 				arr[3] += "_";
+				arr[8] = "-";
 			}
 			arr[5] += "_"; // 1라운드 올인 버튼 비활성화
 		} else {
@@ -197,16 +198,16 @@ public class Room extends ServerMethod {
 	/**
 	 * @return 플레이어 버튼 비활성
 	 */
-	public String[] setButtonInitialization() {
+	public String[] setButtonInit() {
 		String[] arr = new String[10];
 		
 		arr[0] = Protocol.Die+"_";
 		arr[1] = Protocol.Call+"_";
 		arr[2] = Protocol.Ddadang+"_";
-		arr[3] = Protocol.Half+"_";
-		arr[4] = Protocol.Allin+"_";
+		arr[3] = Protocol.Quater+"_";
+		arr[4] = Protocol.Half+"_";
+		arr[5] = Protocol.Allin+"_";
 
-		arr[5] = "-";
 		arr[6] = "-";
 		arr[7] = "-";
 		arr[8] = "-";
@@ -413,7 +414,7 @@ public class Room extends ServerMethod {
 	} //turnProgress();
 	
 	public void countDie() {
-		String[] arr = setButtonInitialization();
+		String[] arr = setButtonInit();
 		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
 		bet(Protocol.Die);
 	}

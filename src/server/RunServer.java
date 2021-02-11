@@ -35,9 +35,11 @@ public class RunServer {
 
 			@Override
 			public void run() {
-				sdao.initMoneyChage();
+				sdao.initMoneyChage(); //파산시 돈을 지급하는 회생 찬스 하루마다 횟수 초기화
 			}
 		};
+		
+		//
 		timer.schedule(task, 0, 24 * 60 * 60 * 1000); // 24시간 마다 실행
 		// timer.schedule(task, 0, 60*1000); // 1분 마다 실행
 
