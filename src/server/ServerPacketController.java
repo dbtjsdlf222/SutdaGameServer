@@ -14,6 +14,7 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 import operator.RoomOperator;
 import util.Packing;
 import util.Protocol;
+import util.MailSender;
 import vo.Packet;
 import vo.PlayerVO;
 
@@ -26,7 +27,7 @@ public class ServerPacketController extends ServerMethod {
 		thisPlayerVO.setSocketWithBrPw(socket);
 	} //ServerPacketController();
 	
-	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
+	public synchronized void  packetAnalysiser(Packet packet) throws JsonProcessingException {
 		
 		logger.info("[Receive(" + Protocol.getName(packet.getProtocol()) + ")] " + packet);
 		
@@ -330,8 +331,24 @@ public class ServerPacketController extends ServerMethod {
 			
 		case Protocol.SELECT_NICK:
 			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECT_NICK, serverDAO.selectNick(packet.getMotion()) ? "true" : "false");
-			break;		
+			break;
 			
+		case Protocol.SELECT_MAIL:
+			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECT_MAIL, serverDAO.selectMail(packet.getMotion()) ? "true" : "false");
+			break;
+			
+		case Protocol.SEND_MAIL_CODE:
+			new Thread(new MailSender(packet.getMotion(),thisPlayerVO)).run();
+			break;
+			
+		case Protocol.CHECK_MAIL_CODE:
+			Packing.sender(
+					thisPlayerVO.getPwSocket(),
+					Protocol.CHECK_MAIL_CODE,
+					thisPlayerVO.getIp().equals(packet.getMotion()) ? "true" : "false"
+			);
+			break;
+
 		case Protocol.SELECT_ONE_PLAYER_WITH_NO:
 			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECT_ONE_PLAYER_WITH_NO, serverDAO.selectOnePlayerWithNo(packet.getPlayerVO().getNo()));
 			break;

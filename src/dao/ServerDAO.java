@@ -207,6 +207,26 @@ public class ServerDAO {
 
 		return true;
 	}
+	
+	public boolean selectMail(String mail) {
+		ResultSet rs;
+		String query = "select EXISTS (select * from player where email= ? ) as success";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, mail);
+			
+			rs = pstmt.executeQuery();
+			rs.next();
+			if (rs.getInt(1) == 1) {
+				return true;
+			} else
+				return false;
+		} catch (SQLException e) {
+		}
+		
+		return true;
+	}
 
 	public PlayerVO login(String id, String pw) {
 		String sql = "SELECT no,id,password,nickname,money,win,lose,admin,`character` FROM player WHERE id=?";

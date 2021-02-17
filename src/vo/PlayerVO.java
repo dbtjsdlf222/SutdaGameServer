@@ -39,7 +39,7 @@ public class PlayerVO {
 	private int cardLevel;
 	private String cardName;
 	private int index;
-	private String ip;
+	private String ip="";
 	private int roomNo; // 0이면 로비
 	private long betMoney;	//room에서 건 돈 저장 (올인시 자신이 건돈만큼만 따기 위함)
 	private boolean allIn = false;	//올인여부
