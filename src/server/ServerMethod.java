@@ -1,15 +1,11 @@
 package server;
 
 import java.io.PrintWriter;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.slf4j.LoggerFactory;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import org.slf4j.Logger;
 
 import dao.ServerDAO;
 import operator.RoomOperator;
@@ -20,10 +16,10 @@ import vo.PlayerVO;
 
 public class ServerMethod {
 	@JsonIgnore protected PlayerVO thisPlayerVO = new PlayerVO();
-	@JsonIgnore protected static Hashtable<String, PlayerVO> lobbyPlayerList = new Hashtable<String,PlayerVO>();
+	@JsonIgnore protected static Map<String, PlayerVO> lobbyPlayerList = new ConcurrentHashMap<String,PlayerVO>();
 	@JsonIgnore protected RoomOperator ro = RoomOperator.getInstance(); 
 	@JsonIgnore protected ServerDAO serverDAO = new ServerDAO();
-	@JsonIgnore protected static Hashtable<String, PrintWriter> playerOnlineList = new Hashtable<String, PrintWriter>();
+	@JsonIgnore protected static Map<String, PrintWriter> playerOnlineList = new ConcurrentHashMap<String, PrintWriter>();
 	
 	public void exitPlayer() {
 

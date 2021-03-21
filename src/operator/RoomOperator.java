@@ -1,7 +1,7 @@
 package operator;
 
-import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import server.Room;
 import vo.PlayerVO;
@@ -9,7 +9,7 @@ import vo.PlayerVO;
 public class RoomOperator {
 	
 	private static RoomOperator ro = new RoomOperator();
-	private Hashtable<Integer, Room> roomMap = new Hashtable<Integer, Room>();
+	private Map<Integer, Room> roomMap = new ConcurrentHashMap<Integer, Room>();
 	
 	public  static RoomOperator getInstance() {
 		return ro;
