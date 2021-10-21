@@ -1,5 +1,8 @@
 package server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import dao.ServerDAO;
+
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
@@ -9,10 +12,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import dao.ServerDAO;
 
 public class RunServer {
 	public static final int MAXPLAYER = 10;

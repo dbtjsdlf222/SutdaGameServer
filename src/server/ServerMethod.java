@@ -1,18 +1,17 @@
 package server;
 
-import java.io.PrintWriter;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import dao.ServerDAO;
 import operator.RoomOperator;
 import util.Packing;
 import util.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
+
+import java.io.PrintWriter;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerMethod {
 	@JsonIgnore protected PlayerVO thisPlayerVO = new PlayerVO();

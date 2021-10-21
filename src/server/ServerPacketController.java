@@ -1,22 +1,19 @@
 package server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import operator.RoomOperator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import util.MailSender;
+import util.Packing;
+import util.Protocol;
+import vo.Packet;
+import vo.PlayerVO;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map.Entry;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
-import operator.RoomOperator;
-import util.Packing;
-import util.Protocol;
-import util.MailSender;
-import vo.Packet;
-import vo.PlayerVO;
 
 public class ServerPacketController extends ServerMethod {
 	protected Socket socket;

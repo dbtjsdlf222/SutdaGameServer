@@ -1,19 +1,13 @@
 package server;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import vo.Packet;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketException;
-
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import util.Packing;
-import util.Protocol;
-import vo.Packet;
 
 public class ServerReceiver extends Thread { // Server
 

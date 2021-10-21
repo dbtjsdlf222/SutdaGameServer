@@ -1,13 +1,12 @@
 package vo;
 
-import java.util.Arrays;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import server.Room;
+
+import java.util.Arrays;
+import java.util.Map;
 
 //import server.Room;
 
