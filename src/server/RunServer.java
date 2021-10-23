@@ -20,7 +20,7 @@ public class RunServer {
 
 	private int port = 4886;
 
-	public static void main(String[] args) throws JsonProcessingException {
+	public static void main(String[] args) {
 		new RunServer().run();
 	}
 
