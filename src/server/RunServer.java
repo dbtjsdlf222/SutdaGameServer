@@ -17,7 +17,7 @@ public class RunServer {
 	public static final int MAXPLAYER = 10;
 	public static final int MAXROOM = MAXPLAYER;
 
-	private int port = 4896;
+	private int port = 4886;
 
 	public static void main(String[] args) {
 		new RunServer().run();

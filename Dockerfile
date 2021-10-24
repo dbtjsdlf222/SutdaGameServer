@@ -11,7 +11,6 @@
 #ENTRYPOINT ["java","-jar","app.jar"]
 
 
-
 FROM ubuntu:latest
 ENV APP_HOME=/usr/local/sutda
 COPY pom.xml $APP_HOME/pom.xml
@@ -21,6 +20,6 @@ RUN apt-get -y update
 RUN apt-get install -y maven
 RUN apt-get install -y openjdk-11-jdk
 RUN mvn package
-COPY /target/SutdaGameServer.jar app.jar
+COPY target/SutdaGameServer-jar-with-dependencies.jar run.jar
 EXPOSE 4886
-ENTRYPOINT ["java","-cp","app.jar","server.RunServer"]
+ENTRYPOINT ["java","-jar","run.jar"]
