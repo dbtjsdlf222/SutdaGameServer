@@ -16,9 +16,8 @@ import java.util.concurrent.Executors;
 public class RunServer {
 	public static final int MAXPLAYER = 10;
 	public static final int MAXROOM = MAXPLAYER;
-	public static int i = 0;
 
-	private int port = 4886;
+	private int port = 4896;
 
 	public static void main(String[] args) {
 		new RunServer().run();
@@ -38,7 +37,6 @@ public class RunServer {
 			}
 		};
 		
-		//
 		timer.schedule(task, 0, 24 * 60 * 60 * 1000); // 24시간 마다 실행
 		// timer.schedule(task, 0, 60*1000); // 1분 마다 실행
 
@@ -58,5 +56,4 @@ public class RunServer {
 		}
 
 	} // run();
-
 } // Accept();
