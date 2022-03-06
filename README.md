@@ -1,7 +1,7 @@
 # SutdaGame
 <h3>자바 소켓을 활용한 게임 입니다.</h3>
 
-언어 Java 11<br>
+언어 Java 1.8<br>
 빌드도구 Maven<br>
 버전관리 Git<br>
 DB MySQL<br>
