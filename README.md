@@ -23,4 +23,4 @@ DB MySQL<br>
 <p>- 개선 할 부분들이 보이는 즉시 memo 패키지에 적어 놓으며 하나씩 줄여나갔습니다. </p>
 
 <br>
-**자세한 게임 기능들에 대한 설명은 <a href="https://github.com/dbtjsdlf222/SutdaGameClient">섯다 클라이언트</a>에 있습니다.**
+**자세한 게임 기능들에 대한 설명은 <a href="https://github.com/dbtjsdlf222/SutdaGameClient">Github 섯다 클라이언트</a>에 있습니다.**
