@@ -5,10 +5,12 @@
 언어 Java 11<br>
 빌드도구 Maven<br>
 
-라이브러리<br>
+사용 라이브러리
 <ul>
   <li>jackson</li>
   <li>slf4j</li>
   <li>mysql-connector</li>
   <li>jbcrypt</li>
 <ul>
+
+게임 서버는 60여개의 프로토콜로 클라이언트와 TCP Socket통신을 하며, 접속할 때마다 서버와 클라이언트 사이에 통신 쓰레드가 생깁니다.
