@@ -3,7 +3,8 @@
 
 언어 Java 11<br>
 빌드도구 Maven<br>
-버전관리 Git
+버전관리 Git<br>
+서버 개발 인원 2명
 
 사용 라이브러리
 <ul>
@@ -12,6 +13,7 @@
   <li>mysql-connector</li>
   <li>jbcrypt</li>
 </ul>
+
 
 
 <p>- 게임 서버는 60여개의 프로토콜로 클라이언트와 TCP Socket 통신을 하며, <br>플레이어가 접속할 때마다 통신 쓰레드가 하나 생성 됩니다.</p>
