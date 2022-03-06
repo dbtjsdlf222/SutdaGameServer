@@ -4,6 +4,7 @@
 언어 Java 11<br>
 빌드도구 Maven<br>
 버전관리 Git<br>
+DB MySQL<br>
 서버 개발 인원 2명
 
 사용 라이브러리
